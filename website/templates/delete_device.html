@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Delete Devices{% endblock %}
+
+{% block content %}
+<form method="POST">
+    
+
+    <label for="device_field">Choose Field:</label>
+    <select name="device_field" id="device_field" onchange="this.form.submit()">
+        <option value="id" {% if selected_field == 'id' %} selected {% endif %}>Device Id/>
+        <option value="device_brand" {% if selected_field == 'device_brand' %} selected {% endif %}>Device Brand/>
+        <option value="device_name" {% if selected_field == 'device_name' %} selected {% endif %}>Device Name/>
+        <option value="device_status" {% if selected_field == 'device_status' %} selected {% endif %}>Device Status/>
+        <option value="device_type" {% if selected_field == 'device_type' %} selected {% endif %}>Device Type/>
+        <option value="last_use" {% if selected_field == 'last_use' %} selected {% endif %}>Last Use/>
+    </select>
+    <br/>
+
+    <label for="operator">Choose Operator:</label>
+    <select name="operator" id="operator">
+        <option value="==">Equals/>
+        <option value="!=">Not Equals/>
+        <option value=">">Greater than/>
+        <option value="<">Less than/>
+        <option value=">=">Greater than and equals to/>
+        <option value="<=">Less than and equals to/>
+    </select>
+    <br/>
+
+    
+    {% if selected_field == 'device_brand' or selected_field == 'device_name' or selected_field == 'device_type' %}
+        <label for="field_value">Enter Value (Text):</label>
+        <input type="text" class="form-control" id="field_value" name="field_value" placeholder="Enter Text Value" required>
+    {% elif selected_field == 'device_status' %}
+        <label for="field_value">Choose Status:</label>
+        <select name="field_value" id="field_value" required>
+            <option value="active">Active/>
+            <option value="inactive">Inactive/>
+            <option value="maintenance">Maintenance/>
+        </select>
+    {% elif selected_field == 'last_use' %}
+        <label for="field_value">Enter Last Use Date:</label>
+        <input type="datetime-local" class="form-control" id="field_value" name="field_value" required>
+    {% else %}
+        <label for="field_value">Enter Id</label>
+        <input type="text" class="form-control" id="field_value" name="field_value" placeholder="Enter Device ID" required>
+    {% endif %}
+    
+    <br/>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

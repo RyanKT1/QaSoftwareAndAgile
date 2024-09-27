@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Device Reservation Management{% endblock %}
+
+{% block content %}
+<h1>Device Reservation Management</h1>
+
+<a  class="btn btn-primary" id="create_reservation" href="/reservation/create">Create new Reservation</a>
+<a  class="btn btn-primary" id="device" href="/device/">See Devices</a>
+<a  class="btn btn-primary" id="reservation" href="/reservation">Manage your Reservations</a>
+<a  class="btn btn-primary" id="user" href="/user">User Settings</a>
+
+{% if user.administrator %}
+<a  class="btn btn-primary" id="user_admin" href="/user/admin">Manage Users</a>
+<a  class="btn btn-primary" id="create_device" href="/device/create">Create Device</a>
+{% endif %}
+<br></br>
+<h3>Current Reservations</h3>
+{% if current_reservations %}
+    <ul>
+        {% for reservation in current_reservations %}
+            <li>
+                <strong>Device:</strong> {{ reservation.device_name }}<br>
+                <strong>Start Time:</strong> {{ reservation.start_time }}<br>
+                <strong>End Time:</strong> {{ reservation.end_time }}<br>
+                <strong>Reason:</strong> {{ reservation.reason }}<br>
+            
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No current reservations.</p>
+{% endif %}
+<br></br>
+<h3>Upcoming Reservations</h3>
+{% if upcoming_reservations %}
+    <ul>
+        {% for reservation in upcoming_reservations %}
+            <li>
+                <strong>Device:</strong> {{ reservation.device_name }}<br>
+                <strong>Start Time:</strong> {{ reservation.start_time }}<br>
+                <strong>End Time:</strong> {{ reservation.end_time }}<br>
+                <strong>Reason:</strong> {{ reservation.reason }}<br>
+            
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No upcoming reservations.</p>
+{% endif %}
+{% endblock %}

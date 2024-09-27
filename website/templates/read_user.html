@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title %}All Users{% endblock %} {% block
+content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+<body>
+  <h1>See All Users</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Email Address</th>
+        <th>Administrator</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email_address }}</td>
+        <td>{{ user.administrator }}</td>
+        <td>
+          <div id="form-{{ user.id }}" class="action-form">
+            <form
+              method="POST"
+              action="{{ url_for('user.admin_view') }}"
+              onsubmit="return confirm('Are you sure you want to make {{user.username}} admin "
+            >
+              <input type="hidden" name="user_id" value="{{ user.id }}" />
+              <button type="submit" name="admin" value="admin">
+                Make Admin
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+{% endblock %}

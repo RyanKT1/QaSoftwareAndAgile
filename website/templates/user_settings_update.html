@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block title %}User Settings{% endblock %} {% block
+content %}
+<h1>User Settings</h1>
+
+<form method="POST" action="{{ url_for('user.change_details') }}">
+  <h3>Update Username</h3>
+  <label for="username">New Username:</label>
+  <input
+    type="text"
+    id="username"
+    name="username"
+    value="{{ user.username }}"
+  />
+  <br />
+
+  <h3>Update Email</h3>
+  <label for="email">New Email:</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    value="{{ user.email_address }}"
+  />
+  <br />
+
+  <h3>Update Password</h3>
+  <label for="new_password">New Password:</label>
+  <input type="password" id="new_password" name="new_password" />
+  <br />
+
+  <label for="confirm_password">Confirm New Password:</label>
+  <input type="password" id="confirm_password" name="confirm_password" />
+  <br />
+
+  <h3>Update Security Pin</h3>
+  <label for="security_pin">New Security Pin:</label>
+  <input
+    type="password"
+    id="security_pin"
+    name="security_pin"
+    pattern="\d{8,}"
+    title="Must be at least 8 digits"
+  />
+  <br />
+
+  <label for="confirm_security_pin">Confirm New Security Pin:</label>
+  <input
+    type="password"
+    id="confirm_security_pin"
+    name="confirm_security_pin"
+  />
+  <br />
+
+  <button type="submit">Save Changes</button>
+</form>
+
+<a href="{{ url_for('views.home') }}">Back to Home</a>
+{% endblock %}

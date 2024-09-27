@@ -1,0 +1,80 @@
+{% extends "base.html" %} {% block title %}All Devices{% endblock %} {% block
+content %}
+<body>
+  <h1>Device List</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Device ID</th>
+        <th>Device Brand</th>
+        <th>Device Name</th>
+        <th>Device Status</th>
+        <th>Device Type</th>
+        <th>Last Use</th>
+        <th>Actions</th>
+        <!-- New column for action buttons -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for device in devices %}
+      <tr>
+        <td>{{ device.id }}</td>
+        <td>{{ device.device_brand }}</td>
+        <td>{{ device.device_name }}</td>
+        <td>{{ device.device_status }}</td>
+        <td>{{ device.device_type }}</td>
+        <td>{{ device.last_use }}</td>
+        <td>
+          <!-- Buttons for actions -->
+          <!-- View Availability -->
+          <form
+            method="GET"
+            action="{{ url_for('device.see_availability') }}"
+            style="display: inline"
+          >
+            <input type="hidden" name="device_id" value="{{ device.id }}" />
+            <button type="submit">View Availability</button>
+          </form>
+          {% if user.administrator %}
+          <!-- Update Device -->
+          <form
+            method="GET"
+            action="{{ url_for('device.update') }}"
+            style="display: inline"
+          >
+            <input type="hidden" name="device_id" value="{{ device.id }}" />
+            <button type="submit">Update</button>
+          </form>
+
+          <!-- Delete Device (using POST to simulate DELETE) -->
+          <form
+            method="POST"
+            action="{{ url_for('device.home') }}"
+            style="display: inline"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <!-- Simulating DELETE method -->
+            <input type="hidden" name="device_id" value="{{ device.id }}" />
+            <button
+              type="submit"
+              onclick="return confirm('Are you sure you want to delete this device?');"
+            >
+              Delete
+            </button>
+          </form>
+          {%endif%}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Button to create a new device -->
+  {% if user.administrator %}
+  <br />
+  <form method="GET" action="{{ url_for('device.create') }}">
+    <button type="submit">Create New Device</button>
+  </form>
+  {% endif %}
+</body>
+{% endblock %}

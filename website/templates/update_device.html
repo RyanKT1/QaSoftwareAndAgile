@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block title %}Update Devices{% endblock %} {% block
+content %}
+<form
+  method="POST"
+  action="{{ url_for('device.update', device=device) }}"
+>
+  <br />
+  <label for="device_name">Device Name:</label>
+  <input
+    type="text"
+    id="device_name"
+    name="device_name"
+    value="{{ device.device_name }}"
+  />
+  <br />
+
+  <label for="device_brand">Device Brand:</label>
+  <input
+    type="text"
+    id="device_brand"
+    name="device_brand"
+    value="{{ device.device_brand }}"
+  />
+  <br />
+
+  <label for="device_status">Device Status:</label>
+  <select name="device_status" id="device_status">
+    <option>{{ device.device_status }}</option>
+    <option value="Active">Active</option>
+    <option value="Inactive">Inactive</option>
+    <option value="Maintenance">Maintenance</option>
+  </select>
+  <br />
+
+  <label for="device_type">Device Type:</label>
+  <input
+    type="text"
+    id="device_type"
+    name="device_type"
+    value="{{ device.device_type }}"
+  />
+  <br />
+
+  <label for="last_use">Last Use:</label>
+  <input
+    type="datetime-local"
+    id="last_use"
+    name="last_use"
+    value="{{ device.last_use }}"
+  />
+  <br />
+
+  <button type="submit">Update Device</button>
+</form>
+<a href="{{ url_for('device.home') }}">Back to Device List</a>
+{% endblock %}

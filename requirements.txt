@@ -1,0 +1,6 @@
+Flask
+gunicorn
+Flask-SQLAlchemy
+Flask-Login
+Flask-Mail
+Flask-Apscheduler

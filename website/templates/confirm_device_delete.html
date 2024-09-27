@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Device delete{% endblock %} {% block
+content %}
+<h2>Confirm Deletion of Device: {{ device.device_name }}</h2>
+
+<p>This device has the following active reservations:</p>
+<ul>
+  {% for reservation in reservations %}
+  <li>
+    {{ reservation.start_time }} - {{ reservation.end_time }} ({{
+    reservation.reason }})
+  </li>
+  {% endfor %}
+</ul>
+
+<p>Are you sure you want to delete this device and its active reservations?</p>
+
+<form method="POST" action="{{ url_for('device.confirm_delete') }}">
+  <input type="hidden" name="device_id" value="{{ device.id }}" />
+  <button type="submit" name="confirm" value="yes">Yes, delete it</button>
+  <button type="submit" name="confirm" value="no">No, keep it</button>
+</form>
+{% endblock %}

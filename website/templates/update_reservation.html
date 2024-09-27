@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Update Reservation{% endblock %} {%
+block content %}
+<form
+  method="POST"
+  action="{{ url_for("reservation.update", reservation_id=reservation.id) }}"
+>
+  <br />
+
+  <label for="device_id">Device ID:</label>
+  <input
+    type="text"
+    id="device_id"
+    name="device_id"
+    value="{{ reservation.device_id }}"
+  />
+  <br />
+
+  <label for="start_time">Start Time:</label>
+  <input
+    type="datetime-local"
+    id="start_time"
+    name="start_time"
+    value="{{ reservation.start_time }}"
+  />
+  <br />
+
+  <label for="end_time">End Time:</label>
+  <input
+    type="datetime-local"
+    id="end_time"
+    name="end_time"
+    value="{{ reservation.end_time }}"
+  />
+  <br />
+
+  <label for="reason">Reason:</label>
+  <textarea id="reason" name="reason" rows="4" cols="50">
+{{ reservation.reason }}</textarea
+  >
+  <br />
+
+  <button type="submit">Update Reservation</button>
+</form>
+
+<a href="{{ url_for('reservation.home') }}">Back to Reservation List</a>
+{% endblock %}

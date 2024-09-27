@@ -1,0 +1,87 @@
+{% extends "base.html" %} {% block title %}Create reservation{% endblock %} {%
+block content %}
+<form method="GET">
+  {%if using_device_id == "True" %}
+  <input
+    type="hidden"
+    name="using_device_id"
+    id="using_device_id"
+    value="{{using_device_id}}"
+  />
+  <button type="submit">DeviceId</button>
+  {%else%}
+  <input
+    type="hidden"
+    name="using_device_id"
+    id="using_device_id"
+    value="{{using_device_id}}"
+  />
+  <button type="submit">Device Name</button>
+  {%endif%}
+</form>
+<form method="POST">
+  <h3 align="center">Reserve a device</h3>
+  {%if using_device_id == "True"%}
+  <div class="form-group">
+    <label for="device_id">DeviceId</label>
+    <input
+      type="number"
+      class="form-control"
+      id="device_id"
+      name="device_id"
+      placeholder="Enter the DeviceId of the device you want to reserve"
+      required
+    />
+  </div>
+  {%else%}
+  <div class="form-group">
+    <label for="device_name">Device Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="device_name"
+      name="device_name"
+      placeholder="Enter the Device name of the device you want to reserve"
+      required
+    />
+  </div>
+  {%endif%}
+
+  <div class="form-group">
+    <label for="start_time">Start time</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      id="start_time"
+      name="start_time"
+      placeholder="Enter start time of your reservation"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="end_time">End time</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      id="end_time"
+      name="end_time"
+      placeholder="Enter end time of your reservation"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="reason">Reason</label>
+    <input
+      type="text"
+      class="form-control"
+      id="reason"
+      name="reason"
+      placeholder="Enter Business Reason"
+      required
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a href="{{ url_for('reservation.home') }}">Back to Reservation List</a>
+{% endblock %}

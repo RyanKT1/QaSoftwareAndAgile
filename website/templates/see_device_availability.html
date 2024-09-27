@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Device Availability{% endblock %} {%
+block content %}
+<h2>Device Availability: {{ device.device_name }}</h2>
+
+<h3>Reservations:</h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for reservation in reservations %}
+    <tr>
+      <td>{{ reservation.start_time }}</td>
+      <td>{{ reservation.end_time }}</td>
+      <td>{{ reservation.reason }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3>Available Time Slots:</h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Available From</th>
+      <th>Available Until</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for slot in availability_slots %}
+    <tr>
+      <td>{{ slot.start }}</td>
+      <td>
+        {% if slot.end %} {{ slot.end }} {% else %} Indefinitely {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('device.home') }}">Back to Device List</a>
+{% endblock %}

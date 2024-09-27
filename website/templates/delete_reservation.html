@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Delete Reservation{% endblock %} {%
+block content %}
+<form method="POST">
+  <label for="reservation_field">Choose Field:</label>
+  <select
+    name="reservation_field"
+    id="reservation_field"
+    onchange="this.form.submit()"
+  >
+    <option value="id" {% if selected_field == 'id' %} selected {% endif %}>Reservation Id
+    <option value="device_id" {% if selected_field == 'device_id' %} selected {% endif %}>Device Id
+    <option value="device_name" {% if selected_field == 'device_name' %} selected {% endif %}>Device name
+    <option value="username" {% if selected_field == 'username' %} selected {% endif %}>Username
+    <option value="start_time" {% if selected_field == 'start_time' %} selected {% endif %}>Start Time
+    <option value="end_time" {% if selected_field == 'end_time' %} selected {% endif %}>End Time
+    <option value="reason" {% if selected_field == 'reason' %} selected {% endif %}>Reason
+  </select>
+  <br />
+
+  <label for="operator">Choose Operator:</label>
+  <select name="operator" id="operator">
+    <option value="==">Equals</option>
+    <option value="!=">Not Equals</option>
+    <option value=">">Greater than</option>
+    <option value="<">Less than</option>
+    <option value=">=">Greater than and equals to</option>
+    <option value="<=">Less than and equals to</option>
+  </select>
+  <br />
+
+  {% if selected_field == 'device_id' or selected_field == 'device_name' or
+  selected_field == 'username' or selected_field == 'reason' %}
+  <label for="field_value">Enter Value (Text):</label>
+  <input
+    type="text"
+    class="form-control"
+    id="field_value"
+    name="field_value"
+    placeholder="Enter Text Value"
+    required
+  />
+
+  {% elif selected_field == 'start_time' or selected_field == 'end_time' %}
+  <label for="field_value">Enter time:</label>
+  <input
+    type="datetime-local"
+    class="form-control"
+    id="field_value"
+    name="field_value"
+    required
+  />
+  {% else %}
+  <label for="field_value">Enter Id</label>
+  <input
+    type="text"
+    class="form-control"
+    id="field_value"
+    name="field_value"
+    placeholder="Enter Reservation ID"
+    required
+  />
+  {% endif %}
+
+  <br />
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}

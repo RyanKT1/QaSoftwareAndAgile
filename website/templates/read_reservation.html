@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block title %}All Reservations{% endblock %} {%
+block content %}
+<body>
+  <h1>Reservation List</h1>
+
+  <!-- Toggle button for admin to switch between all reservations and their own -->
+  {% if current_user.administrator %}
+  <form method="GET" action="{{ url_for('reservation.home') }}">
+    <input
+      type="hidden"
+      name="show_all"
+      value="{{ 'false' if show_all else 'true' }}"
+    />
+    <button type="submit">
+      {% if show_all %} Show Only My Reservations {% else %} Show All Users'
+      Reservations {% endif %}
+    </button>
+  </form>
+  {% endif %}
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Reservation ID</th>
+        <th>Device ID</th>
+        <th>Device Name</th>
+        <th>Username</th>
+        <th>Start Time</tåh>
+        <th>End Time</th>
+        <th>Reason</th>
+        <th>Actions</th>
+        <!-- New column for action buttons -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.device_id }}</td>
+        <td>{{ reservation.device_name }}</td>
+        <td>{{ reservation.username }}</td>
+        <td>{{ reservation.start_time }}</td>
+        <td>{{ reservation.end_time }}</td>
+        <td>{{ reservation.reason }}</td>
+        <td>
+          <!-- Modify Button -->
+          <form
+            method="GET"
+            action="{{ url_for("reservation.update", reservation_id=reservation.id) }}"
+            style="display: inline"
+          >
+            <input
+              type="hidden"
+              name="reservation_id"
+              value="{{ reservation.id }}"
+            />
+            <button type="submit">Update</button>
+          </form>
+          <!-- Delete Button (with confirmation) -->
+          <form
+            method="POST"
+            action="{{ url_for('reservation.home') }}"
+            style="display: inline"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <input
+              type="hidden"
+              name="reservation_id"
+              value="{{ reservation.id }}"
+            />
+            <button
+              type="submit"
+              onclick="return confirm('Are you sure you want to delete this reservation?');"
+            >
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Button to create a new reservation -->
+  <br />
+  <form method="GET" action="{{ url_for('reservation.create') }}">
+    <button type="submit">Create New Reservation</button>
+  </form>
+</body>
+{% endblock %}
